@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生活灵感小助手</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="生活灵感小助手">
+        <span class="brand-mark">✦</span>
+        <span>生活灵感小助手</span>
+      </a>
+      <nav class="top-actions" aria-label="常用操作">
+        <button class="ghost-button" id="undoButton" type="button" disabled>撤回上一步</button>
+        <button class="ghost-button" id="historyButton" data-drawer="historyDrawer" type="button">生成记录</button>
+        <button class="ghost-button" id="savedButton" data-drawer="savedDrawer" type="button">灵感盒子</button>
+        <button class="ghost-button" id="notesButton" data-drawer="notesDrawer" type="button">今日体验</button>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero-card" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="soft-kicker">今天不想用力生活，也可以过得有点漂亮。</p>
+          <h1 id="heroTitle">把生活里的小问号，变成今天就能做的计划</h1>
+          <p class="hero-subtitle">输入一个模糊想法，帮你整理成几套轻量、具体、可复刻的小方案。</p>
+        </div>
+
+        <form class="inspiration-form" id="inspirationForm">
+          <label class="input-label" for="ideaInput">你最近想试试什么？</label>
+          <div class="input-wrap">
+            <textarea id="ideaInput" rows="4" placeholder="比如：这个周末想一个人出去走走，但不想太累"></textarea>
+            <button class="primary-button" id="generateButton" type="submit">
+              <span class="button-text">生成我的灵感</span>
+              <span class="button-loader" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="choice-block">
+            <p>先选一个方向</p>
+            <div class="pill-row" id="categoryPills" role="listbox" aria-label="快捷灵感标签"></div>
+          </div>
+
+          <div class="choice-block">
+            <p>现在的状态</p>
+            <div class="pill-row" id="moodPills" role="listbox" aria-label="当前状态标签"></div>
+          </div>
+        </form>
+      </section>
+
+      <section class="loading-panel is-hidden" id="loadingPanel" aria-live="polite">
+        <div class="spinner"></div>
+        <p id="loadingText">正在把模糊想法整理成小计划...</p>
+      </section>
+
+      <section class="result-section is-hidden" id="resultSection" aria-live="polite">
+        <div class="result-head">
+          <div>
+            <p class="soft-kicker">刚刚整理好</p>
+            <h2 id="resultJudgement">今天更适合做一个低消耗、容易复刻的小计划。</h2>
+          </div>
+          <button class="secondary-button" id="regenerateButton" type="button">换一组灵感</button>
+        </div>
+
+        <div class="adjust-panel" aria-label="调整方案">
+          <span>想让它再偏向一点：</span>
+          <div class="adjust-actions" id="adjustActions"></div>
+        </div>
+
+        <div class="plans-grid" id="plansGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <aside class="drawer" id="savedDrawer" aria-hidden="true" aria-labelledby="savedTitle">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div>
+          <p class="soft-kicker">慢慢攒</p>
+          <h2 id="savedTitle">灵感盒子</h2>
+        </div>
+        <button class="icon-button" data-close-drawer type="button" aria-label="关闭灵感盒子">×</button>
+      </div>
+      <div class="drawer-content" id="savedPlansList"></div>
+    </div>
+  </aside>
+
+  <aside class="drawer" id="historyDrawer" aria-hidden="true" aria-labelledby="historyTitle">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div>
+          <p class="soft-kicker">走过的小路</p>
+          <h2 id="historyTitle">生成记录</h2>
+        </div>
+        <button class="icon-button" data-close-drawer type="button" aria-label="关闭生成记录">×</button>
+      </div>
+      <div class="drawer-content" id="historyList"></div>
+    </div>
+  </aside>
+
+  <aside class="drawer" id="notesDrawer" aria-hidden="true" aria-labelledby="notesTitle">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <div>
+          <p class="soft-kicker">做了一点点也算数</p>
+          <h2 id="notesTitle">今日体验</h2>
+        </div>
+        <button class="icon-button" data-close-drawer type="button" aria-label="关闭今日体验">×</button>
+      </div>
+      <div class="filter-row" id="noteFilters"></div>
+      <div class="drawer-content" id="experienceNotesList"></div>
+    </div>
+  </aside>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <template id="planTemplate">
+    <article class="plan-card"></article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
